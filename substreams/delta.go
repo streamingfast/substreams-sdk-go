@@ -10,12 +10,17 @@ import (
 
 type Delta[T any] interface {
 	From(d *pbsubstreamsrpc.StoreDelta) error
+	GetOperation() pbsubstreamsrpc.StoreDelta_Operation
 }
 
 type deltaCommon struct {
 	Operation pbsubstreamsrpc.StoreDelta_Operation
 	Key       string
 	Ordinal   uint64
+}
+
+func (dc *deltaCommon) GetOperation() pbsubstreamsrpc.StoreDelta_Operation {
+	return dc.Operation
 }
 
 type DeltaInt64 struct {
