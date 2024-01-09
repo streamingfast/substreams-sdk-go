@@ -1,6 +1,6 @@
 module github.com/streamingfast/substreams-sdk-go
 
-go 1.21.5
+go 1.21
 
 require (
 	github.com/streamingfast/substreams v1.3.0
