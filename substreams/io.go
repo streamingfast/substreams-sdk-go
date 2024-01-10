@@ -10,24 +10,16 @@ func readAll(r io.Reader, allocSize int) ([]byte, error) {
 		allocSize = 1024
 	}
 
-	b := make([]byte, 0, allocSize)
-	count := 0
-	for {
-		count++
-		n, err := r.Read(b[len(b):cap(b)])
-		b = b[:len(b)+n]
-		if err != nil {
-			if err == io.EOF {
-				err = nil
-			}
-			return b, err
+	b := make([]byte, allocSize, allocSize)
+	_, err := r.Read(b)
+	if err != nil {
+		if err == io.EOF {
+			err = nil
 		}
-
-		if len(b) == cap(b) {
-			// Add more capacity (let append pick how much).
-			b = append(b, 0)[:len(b)]
-		}
+		return b, err
 	}
+
+	return b, nil
 }
 
 func WriteOutput(data []byte) (int, error) {
